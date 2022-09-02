@@ -5,14 +5,15 @@ from datetime import datetime, timedelta
 from typing import Any, Dict, List
 
 from freqtrade.configuration import TimeRange, setup_utils_configuration
+from freqtrade.constants import DATETIME_PRINT_FORMAT
 from freqtrade.data.converter import convert_ohlcv_format, convert_trades_format
 from freqtrade.data.history import (convert_trades_to_ohlcv, refresh_backtest_ohlcv_data,
                                     refresh_backtest_trades_data)
-from freqtrade.enums import RunMode
+from freqtrade.enums import CandleType, RunMode, TRADING_MODES
 from freqtrade.exceptions import OperationalException
 from freqtrade.exchange import timeframe_to_minutes
 from freqtrade.exchange.exchange import market_is_active
-from freqtrade.plugins.pairlist.pairlist_helpers import expand_pairlist
+from freqtrade.plugins.pairlist.pairlist_helpers import expand_pairlist , dynamic_expand_pairlist
 from freqtrade.resolvers import ExchangeResolver
 
 
@@ -50,7 +51,7 @@ def start_download_data(args: Dict[str, Any]) -> None:
     exchange = ExchangeResolver.load_exchange(config['exchange']['name'], config, validate=False)
     markets = [p for p, m in exchange.markets.items() if market_is_active(m)
                or config.get('include_inactive')]
-    expanded_pairs = expand_pairlist(config['pairs'], markets)
+    expanded_pairs =  dynamic_expand_pairlist(config, markets)
 
     # Manual validations of relevant settings
     if not config['exchange'].get('skip_pair_validation', False):
@@ -64,6 +65,8 @@ def start_download_data(args: Dict[str, Any]) -> None:
     try:
 
         if config.get('download_trades'):
+            if config.get('trading_mode') == 'futures':
+                raise OperationalException("Trade Download not supported for futures")
             pairs_not_available = refresh_backtest_trades_data(
                 exchange, pairs=expanded_pairs, datadir=config['datadir'],
                 timerange=timerange, new_pairs_days=config['new_pairs_days'],
@@ -77,11 +80,18 @@ def start_download_data(args: Dict[str, Any]) -> None:
                 data_format_trades=config['dataformat_trades'],
             )
         else:
+            if not exchange.get_option('ohlcv_has_history', True): 
+                raise OperationalException(
+                    f"Historic klines not available for {exchange.name}. "
+                    )
             pairs_not_available = refresh_backtest_ohlcv_data(
                 exchange, pairs=expanded_pairs, timeframes=config['timeframes'],
                 datadir=config['datadir'], timerange=timerange,
                 new_pairs_days=config['new_pairs_days'],
-                erase=bool(config.get('erase')), data_format=config['dataformat_ohlcv'])
+                erase=bool(config.get('erase')), data_format=config['dataformat_ohlcv'],
+                trading_mode=config.get('trading_mode', 'spot'),
+                prepend=config.get('prepend_data', False)
+            )
 
     except KeyboardInterrupt:
         sys.exit("SIGINT received, aborting ...")
@@ -137,9 +147,11 @@ def start_convert_data(args: Dict[str, Any], ohlcv: bool = True) -> None:
                              convert_from=args['format_from'], convert_to=args['format_to'],
                              erase=args['erase'])
     else:
-        convert_trades_format(config,
-                              convert_from=args['format_from'], convert_to=args['format_to'],
-                              erase=args['erase'])
+        candle_types = [CandleType.from_string(ct) for ct in config.get('candle_types', ['spot'])]
+        for candle_type in candle_types:
+            convert_ohlcv_format(config,
+                                 convert_from=args['format_from'], convert_to=args['format_to'],
+                                 erase=args['erase'], candle_type=candle_type)
 
 
 def start_list_data(args: Dict[str, Any]) -> None:
@@ -154,17 +166,32 @@ def start_list_data(args: Dict[str, Any]) -> None:
     from freqtrade.data.history.idatahandler import get_datahandler
     dhc = get_datahandler(config['datadir'], config['dataformat_ohlcv'])
 
-    paircombs = dhc.ohlcv_get_available_data(config['datadir'])
+    paircombs = dhc.ohlcv_get_available_data(
+        config['datadir'],
+        config.get('trading_mode', TradingMode.SPOT)
+        )
 
     if args['pairs']:
         paircombs = [comb for comb in paircombs if comb[0] in args['pairs']]
 
     print(f"Found {len(paircombs)} pair / timeframe combinations.")
-    groupedpair = defaultdict(list)
-    for pair, timeframe in sorted(paircombs, key=lambda x: (x[0], timeframe_to_minutes(x[1]))):
-        groupedpair[pair].append(timeframe)
+    if not config.get('show_timerange'):
+        groupedpair = defaultdict(list)
+        for pair, timeframe, candle_type in sorted(
+            paircombs,
+            key=lambda x: (x[0], timeframe_to_minutes(x[1]), x[2])
+        ):
+            groupedpair[(pair, candle_type)].append(timeframe)
 
-    if groupedpair:
-        print(tabulate([(pair, ', '.join(timeframes)) for pair, timeframes in groupedpair.items()],
-                       headers=("Pair", "Timeframe"),
-                       tablefmt='psql', stralign='right'))
+        if groupedpair:
+            print(tabulate([
+                (pair, ', '.join(timeframes), candle_type)
+                for (pair, candle_type), timeframes in groupedpair.items()
+            ],
+                headers=("Pair", "Timeframe", "Type"),
+                tablefmt='psql', stralign='right'))
+    else:
+        paircombs1 = [(
+            pair, timeframe, candle_type,
+            *dhc.ohlcv_data_min_max(pair, timeframe, candle_type)
+        ) for pair, timeframe, candle_type in paircombs]
