@@ -9,11 +9,11 @@ from freqtrade.constants import DATETIME_PRINT_FORMAT
 from freqtrade.data.converter import convert_ohlcv_format, convert_trades_format
 from freqtrade.data.history import (convert_trades_to_ohlcv, refresh_backtest_ohlcv_data,
                                     refresh_backtest_trades_data)
-from freqtrade.enums import CandleType, RunMode, TRADING_MODES
+from freqtrade.enums import CandleType, RunMode, TradingMode
 from freqtrade.exceptions import OperationalException
 from freqtrade.exchange import timeframe_to_minutes
 from freqtrade.exchange.exchange import market_is_active
-from freqtrade.plugins.pairlist.pairlist_helpers import expand_pairlist , dynamic_expand_pairlist
+from freqtrade.plugins.pairlist.pairlist_helpers import dynamic_expand_pairlist, expand_pairlist
 from freqtrade.resolvers import ExchangeResolver
 
 
@@ -51,7 +51,8 @@ def start_download_data(args: Dict[str, Any]) -> None:
     exchange = ExchangeResolver.load_exchange(config['exchange']['name'], config, validate=False)
     markets = [p for p, m in exchange.markets.items() if market_is_active(m)
                or config.get('include_inactive')]
-    expanded_pairs =  dynamic_expand_pairlist(config, markets)
+
+    expanded_pairs = dynamic_expand_pairlist(config, markets)
 
     # Manual validations of relevant settings
     if not config['exchange'].get('skip_pair_validation', False):
@@ -66,7 +67,7 @@ def start_download_data(args: Dict[str, Any]) -> None:
 
         if config.get('download_trades'):
             if config.get('trading_mode') == 'futures':
-                raise OperationalException("Trade Download not supported for futures")
+                raise OperationalException("Trade download not supported for futures.")
             pairs_not_available = refresh_backtest_trades_data(
                 exchange, pairs=expanded_pairs, datadir=config['datadir'],
                 timerange=timerange, new_pairs_days=config['new_pairs_days'],
@@ -80,9 +81,11 @@ def start_download_data(args: Dict[str, Any]) -> None:
                 data_format_trades=config['dataformat_trades'],
             )
         else:
-            if not exchange.get_option('ohlcv_has_history', True): 
+            if not exchange.get_option('ohlcv_has_history', True):
                 raise OperationalException(
                     f"Historic klines not available for {exchange.name}. "
+                    "Please use `--dl-trades` instead for this exchange "
+                    "(will unfortunately take a long time)."
                     )
             pairs_not_available = refresh_backtest_ohlcv_data(
                 exchange, pairs=expanded_pairs, timeframes=config['timeframes'],
@@ -143,15 +146,15 @@ def start_convert_data(args: Dict[str, Any], ohlcv: bool = True) -> None:
     """
     config = setup_utils_configuration(args, RunMode.UTIL_NO_EXCHANGE)
     if ohlcv:
-        convert_ohlcv_format(config,
-                             convert_from=args['format_from'], convert_to=args['format_to'],
-                             erase=args['erase'])
-    else:
         candle_types = [CandleType.from_string(ct) for ct in config.get('candle_types', ['spot'])]
         for candle_type in candle_types:
             convert_ohlcv_format(config,
                                  convert_from=args['format_from'], convert_to=args['format_to'],
                                  erase=args['erase'], candle_type=candle_type)
+    else:
+        convert_trades_format(config,
+                              convert_from=args['format_from'], convert_to=args['format_to'],
+                              erase=args['erase'])
 
 
 def start_list_data(args: Dict[str, Any]) -> None:
@@ -195,3 +198,11 @@ def start_list_data(args: Dict[str, Any]) -> None:
             pair, timeframe, candle_type,
             *dhc.ohlcv_data_min_max(pair, timeframe, candle_type)
         ) for pair, timeframe, candle_type in paircombs]
+        print(tabulate([
+            (pair, timeframe, candle_type,
+                start.strftime(DATETIME_PRINT_FORMAT),
+                end.strftime(DATETIME_PRINT_FORMAT))
+            for pair, timeframe, candle_type, start, end in paircombs1
+            ],
+            headers=("Pair", "Timeframe", "Type", 'From', 'To'),
+            tablefmt='psql', stralign='right'))
