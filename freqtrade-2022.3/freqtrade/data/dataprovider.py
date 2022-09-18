@@ -5,6 +5,7 @@ including ticker and orderbook data, live and historical candle (OHLCV) data
 Common Interface for bot and strategy to access data.
 """
 import logging
+from collections import deque
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -13,9 +14,10 @@ from pandas import DataFrame
 from freqtrade.configuration import TimeRange
 from freqtrade.constants import ListPairsWithTimeframes, PairWithTimeframe
 from freqtrade.data.history import load_pair_history
-from freqtrade.enums import RunMode
+from freqtrade.enums import CandleType, RunMode
 from freqtrade.exceptions import ExchangeError, OperationalException
 from freqtrade.exchange import Exchange, timeframe_to_seconds
+from freqtrade.util import PeriodicCache
 
 
 logger = logging.getLogger(__name__)
@@ -33,6 +35,10 @@ class DataProvider:
         self.__cached_pairs: Dict[PairWithTimeframe, Tuple[DataFrame, datetime]] = {}
         self.__slice_index: Optional[int] = None
         self.__cached_pairs_backtesting: Dict[PairWithTimeframe, DataFrame] = {}
+        self._msg_queue: deque = deque()
+
+        self.__msg_cache = PeriodicCache(
+            maxsize=1000, ttl=timeframe_to_seconds(self._config.get('timeframe', '1h')))
 
     def _set_dataframe_max_index(self, limit_index: int):
         """
@@ -41,7 +47,13 @@ class DataProvider:
         """
         self.__slice_index = limit_index
 
-    def _set_cached_df(self, pair: str, timeframe: str, dataframe: DataFrame) -> None:
+    def _set_cached_df(
+        self,
+        pair: str,
+        timeframe: str,
+        dataframe: DataFrame,
+        candle_type: CandleType
+    ) -> None:
         """
         Store cached Dataframe.
         Using private method as this should never be used by a user
@@ -49,8 +61,10 @@ class DataProvider:
         :param pair: pair to get the data for
         :param timeframe: Timeframe to get data for
         :param dataframe: analyzed dataframe
+        :param candle_type: Any of the enum CandleType (must match trading mode!)
         """
-        self.__cached_pairs[(pair, timeframe)] = (dataframe, datetime.now(timezone.utc))
+        self.__cached_pairs[(pair, timeframe, candle_type)] = (
+            dataframe, datetime.now(timezone.utc))
 
     def add_pairlisthandler(self, pairlists) -> None:
         """
@@ -58,13 +72,21 @@ class DataProvider:
         """
         self._pairlists = pairlists
 
-    def historic_ohlcv(self, pair: str, timeframe: str = None) -> DataFrame:
+    def historic_ohlcv(
+        self,
+        pair: str,
+        timeframe: str = None,
+        candle_type: str = ''
+    ) -> DataFrame:
         """
         Get stored historical candle (OHLCV) data
         :param pair: pair to get the data for
         :param timeframe: timeframe to get data for
+        :param candle_type: '', mark, index, premiumIndex, or funding_rate
         """
-        saved_pair = (pair, str(timeframe))
+        _candle_type = CandleType.from_string(
+            candle_type) if candle_type != '' else self._config['candle_type_def']
+        saved_pair = (pair, str(timeframe), _candle_type)
         if saved_pair not in self.__cached_pairs_backtesting:
             timerange = TimeRange.parse_timerange(None if self._config.get(
                 'timerange') is None else str(self._config.get('timerange')))
@@ -77,26 +99,36 @@ class DataProvider:
                 timeframe=timeframe or self._config['timeframe'],
                 datadir=self._config['datadir'],
                 timerange=timerange,
-                data_format=self._config.get('dataformat_ohlcv', 'json')
+                data_format=self._config.get('dataformat_ohlcv', 'json'),
+                candle_type=_candle_type,
+
             )
         return self.__cached_pairs_backtesting[saved_pair].copy()
 
-    def get_pair_dataframe(self, pair: str, timeframe: str = None) -> DataFrame:
+    def get_pair_dataframe(
+        self,
+        pair: str,
+        timeframe: str = None,
+        candle_type: str = ''
+    ) -> DataFrame:
         """
         Return pair candle (OHLCV) data, either live or cached historical -- depending
         on the runmode.
+        Only combinations in the pairlist or which have been specified as informative pairs
+        will be available.
         :param pair: pair to get the data for
         :param timeframe: timeframe to get data for
         :return: Dataframe for this pair
+        :param candle_type: '', mark, index, premiumIndex, or funding_rate
         """
         if self.runmode in (RunMode.DRY_RUN, RunMode.LIVE):
             # Get live OHLCV data.
-            data = self.ohlcv(pair=pair, timeframe=timeframe)
+            data = self.ohlcv(pair=pair, timeframe=timeframe, candle_type=candle_type)
         else:
             # Get historical OHLCV data (cached on disk).
-            data = self.historic_ohlcv(pair=pair, timeframe=timeframe)
+            data = self.historic_ohlcv(pair=pair, timeframe=timeframe, candle_type=candle_type)
         if len(data) == 0:
-            logger.warning(f"No data found for ({pair}, {timeframe}).")
+            logger.warning(f"No data found for ({pair}, {timeframe}, {candle_type}).")
         return data
 
     def get_analyzed_dataframe(self, pair: str, timeframe: str) -> Tuple[DataFrame, datetime]:
@@ -109,7 +141,7 @@ class DataProvider:
             combination.
             Returns empty dataframe and Epoch 0 (1970-01-01) if no dataframe was cached.
         """
-        pair_key = (pair, timeframe)
+        pair_key = (pair, timeframe, self._config.get('candle_type_def', CandleType.SPOT))
         if pair_key in self.__cached_pairs:
             if self.runmode in (RunMode.DRY_RUN, RunMode.LIVE):
                 df, date = self.__cached_pairs[pair_key]
@@ -177,20 +209,31 @@ class DataProvider:
             raise OperationalException(NO_EXCHANGE_EXCEPTION)
         return list(self._exchange._klines.keys())
 
-    def ohlcv(self, pair: str, timeframe: str = None, copy: bool = True) -> DataFrame:
+    def ohlcv(
+        self,
+        pair: str,
+        timeframe: str = None,
+        copy: bool = True,
+        candle_type: str = ''
+    ) -> DataFrame:
         """
         Get candle (OHLCV) data for the given pair as DataFrame
         Please use the `available_pairs` method to verify which pairs are currently cached.
         :param pair: pair to get the data for
         :param timeframe: Timeframe to get data for
+        :param candle_type: '', mark, index, premiumIndex, or funding_rate
         :param copy: copy dataframe before returning if True.
                      Use False only for read-only operations (where the dataframe is not modified)
         """
         if self._exchange is None:
             raise OperationalException(NO_EXCHANGE_EXCEPTION)
         if self.runmode in (RunMode.DRY_RUN, RunMode.LIVE):
-            return self._exchange.klines((pair, timeframe or self._config['timeframe']),
-                                         copy=copy)
+            _candle_type = CandleType.from_string(
+                candle_type) if candle_type != '' else self._config['candle_type_def']
+            return self._exchange.klines(
+                (pair, timeframe or self._config['timeframe'], _candle_type),
+                copy=copy
+            )
         else:
             return DataFrame()
 
@@ -228,3 +271,20 @@ class DataProvider:
         if self._exchange is None:
             raise OperationalException(NO_EXCHANGE_EXCEPTION)
         return self._exchange.fetch_l2_order_book(pair, maximum)
+
+    def send_msg(self, message: str, *, always_send: bool = False) -> None:
+        """
+        Send custom RPC Notifications from your bot.
+        Will not send any bot in modes other than Dry-run or Live.
+        :param message: Message to be sent. Must be below 4096.
+        :param always_send: If False, will send the message only once per candle, and surpress
+                            identical messages.
+                            Careful as this can end up spaming your chat.
+                            Defaults to False
+        """
+        if self.runmode not in (RunMode.DRY_RUN, RunMode.LIVE):
+            return
+
+        if always_send or message not in self.__msg_cache:
+            self._msg_queue.append(message)
+        self.__msg_cache[message] = True
