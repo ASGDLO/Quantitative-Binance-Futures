@@ -20,6 +20,7 @@ class HDF5DataHandler(IDataHandler):
 
     _columns = DEFAULT_DATAFRAME_COLUMNS
 
+
     @classmethod
     def ohlcv_get_pairs(cls, datadir: Path, timeframe: str, candle_type: CandleType) -> List[str]:
         """
