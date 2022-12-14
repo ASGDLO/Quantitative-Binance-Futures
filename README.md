@@ -53,9 +53,9 @@ For questions and support please use the official [Discord channel](https://disc
 <a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1052581168840712242/image.png" width="185" valign="middle" /></a></td>
 </table>
 
-#### Principal Sponsors
+#### Related Project
 <table style="text-align:center;"><tr>
-  <td><a href="https://trilon.io" target="_blank"><img src="https://nestjs.com/img/trilon.svg" width="200" valign="middle" /></a></td>
+  <td><a href="https://github.com/Fractal-crypto/Blockchain_fund_nft" target="_blank"><img src="https://nestjs.com/img/trilon.svg" width="200" valign="middle" /></a></td>
   <td><a href="https://www.redhat.com" target="_blank"><img src="https://nestjs.com/img/red-hat-logo.svg" width="200" valign="middle" /></a></td>
 <td>
 <a href="https://github.com/Sanofi-IADC" target="_blank"><img src="https://docs.nestjs.com/assets/sponsors/sanofi.png" width="180" valign="middle" /></a></td>
