@@ -8,12 +8,12 @@
   <p align="center">A progressive quantitative trading project to build efficient cryptocurrency trading.</p>
     <p align="center">
   
-<p  
+ <p align="center"> 
 <a href="https://discord.gg/MUPX4kxD6t" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
 <a href="https://www.linkedin.com/in/%EC%B0%A8%ED%9B%88-%EC%9D%B4-30a4b9213/" target="_blank"><img src="http://www.w3.org/2000/svg" alt="linkedin" /></a>
   <a href="https://paypal.me/hoon33710?country.x=KR&locale.x=ko_KR" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
  </p>
-    <p align="center">
+   
   
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
