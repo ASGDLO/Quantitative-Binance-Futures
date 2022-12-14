@@ -2,7 +2,7 @@
 old spot version to futures trading mode
 ### source ./.env/bin/activate
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://cdn.discordapp.com/icons/875346679568691250/5b6795312241b769b6085a4507be94d4.webp?size=96" width="120" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
