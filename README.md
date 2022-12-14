@@ -26,7 +26,7 @@ We use backtesting, paper trading, live trading, trade signal visualization, gri
 
 <p>Money is not just purchasing power or a position in life. This can create more value in the world by helping people achieve the right goals. </p>
 
-Having traded over $7 million dollar in 6 years, I was trying to figure out the best way to make money in the market. Humans cannot always make the right decisions and read tons of data. Quantitative trading is the best way to make good decisions in the market.
+Having traded over $5 million dollar in 6 years, I was trying to figure out the best way to make money in the market. Humans cannot always make the right decisions and read tons of data. Quantitative trading is the best way to make good decisions in the market.
 
 ## Getting started
 
@@ -48,7 +48,7 @@ For questions and support please use the official [Discord channel](https://disc
 <td>
 <a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1051338274519658526/image.png?width=1378&height=467" width="200" valign="middle" /></a></td>
 <td>
-<a target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1052570393979924550/image.png" width="185" valign="middle" /></a></td>
+<a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1052580607978385488/image.png?width=624&height=630" width="185" valign="middle" /></a></td>
 </table>
 
 #### Principal Sponsors
