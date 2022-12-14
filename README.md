@@ -8,10 +8,6 @@
   <p align="center">A progressive quantitative trading project to build efficient cryptocurrency trading.</p>
     <p align="center">
   
-
-
-
-<a href="https://cdn.discordapp.com/attachments/794857815709450242/1051310164453638194/image.png" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
   
 <a href="https://discord.gg/MUPX4kxD6t" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
 <a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
