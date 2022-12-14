@@ -72,14 +72,17 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 <a href="https://amplication.com/" target="_blank"><img src="https://nestjs.com/img/amplication-logo.svg" width="190" valign="middle" /></a></td>
 </tr></table>
 
-#### Trading History
+#### Trading History 2016 ~ 2022
 
 <table style="text-align:center;"><tr><td>
-<a  target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1051337356180983949/image.png" width="140" valign="middle" /></a></td>
-<td>
+
 <a  target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1051310164453638194/image.png" width="200" valign="middle" /></a></td>
  <td>
-<a href="https://jetbrains.com/" target="_blank"><img src="https://nestjs.com/img/jetbrains-logo.svg" width="110" valign="middle" /></a></td><td>
+   
+<a  target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1051337356180983949/image.png" width="140" valign="middle" /></a></td>
+<td>
+  
+<a href="https://jetbrains.com/" target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1051338274519658526/image.png?width=1378&height=467" width="110" valign="middle" /></a></td><td>
 <a href="https://snyk.co/nestjs" target="_blank"><img src="https://nestjs.com/img/snyk-logo-black.png" width="185" valign="middle" /></a></td><td>
 <a href="https://fuseautotech.com/" target="_blank"><img src="https://nestjs.com/img/fuse-logo.svg" width="105" valign="middle" /></a></td>
 <td>
