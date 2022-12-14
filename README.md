@@ -33,18 +33,13 @@ Having traded over $3 million in 6 years, I was trying to figure out the best wa
 
 ## Getting started
 
-* To check out the [guide](https://docs.nestjs.com), visit [docs.nestjs.com](https://docs.nestjs.com). :books:
-* 要查看中文 [指南](readme_zh.md), 请访问 [docs.nestjs.cn](https://docs.nestjs.cn). :books:
-* [가이드](readme_kr.md) 문서는 [docs.nestjs.com](https://docs.nestjs.com)에서 확인하실 수 있습니다. :books:
-* [ガイド](readme_jp.md)は [docs.nestjs.com](https://docs.nestjs.com)でご確認ください。 :books:
+* git clone https://github.com/ASGDLO/Quantitative-Binance-Futures.git
+* ./setup.sh -i
+* source ./.env/bin/activate
 
 ## Questions
 
-For questions and support please use the official [Discord channel](https://discord.gg/G7Qnnhy). The issue list of this repo is **exclusively** for bug reports and feature requests.
-
-## Issues
-
-Please make sure to read the [Issue Reporting Checklist](https://github.com/nestjs/nest/blob/master/CONTRIBUTING.md#-submitting-an-issue) before opening an issue. Issues not conforming to the guidelines may be closed immediately.
+For questions and support please use the official [Discord channel](https://discord.gg/MUPX4kxD6t). The issue list of this repo is **exclusively** for bug reports and feature requests.
 
 ## Consulting
 
@@ -52,7 +47,7 @@ With official support, you can get expert help straight from Nest core team. We 
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support from the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+It can grow thanks to the sponsors and support from the amazing backers freqtrade
 
 #### Principal Sponsors
 <table style="text-align:center;"><tr>
