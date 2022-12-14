@@ -51,7 +51,7 @@ For questions and support please use the official [Discord channel](https://disc
 <a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1051338274519658526/image.png?width=1378&height=467" width="200" valign="middle" /></a></td><td>
   
 <a target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1052570393979924550/image.png" width="185" valign="middle" /></a></td><td>
-</tr></table>
+</table>
 
 #### Principal Sponsors
 <table style="text-align:center;"><tr>
