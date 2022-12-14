@@ -48,7 +48,7 @@ For questions and support please use the official [Discord channel](https://disc
 <a  target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1051337356180983949/image.png" width="140" valign="middle" /></a></td>
 <td>
   
-<a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1051338274519658526/image.png?width=1378&height=467" width="110" valign="middle" /></a></td><td>
+<a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1051338274519658526/image.png?width=1378&height=467" width="200" valign="middle" /></a></td><td>
   
 <a href="https://snyk.co/nestjs" target="_blank"><img src="https://nestjs.com/img/snyk-logo-black.png" width="185" valign="middle" /></a></td><td>
 <a href="https://fuseautotech.com/" target="_blank"><img src="https://nestjs.com/img/fuse-logo.svg" width="105" valign="middle" /></a></td>
