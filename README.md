@@ -23,7 +23,7 @@
 
 Finding a profitable algorithm is too difficult. However, Renaissance Technologies knows how to make money in derivative markets. I believe there is alpha in the future market and crypto is the best platform we can trade on.</p>
 
-We use backtesting, paper trading, live trading, trade signal visualization, grid search, find best parameter with Basian Optimazation.
+We use backtesting, paper trading, live trading, trade signal visualization, grid search, find best parameter with Machine Learning.
 
 ## Philosophy
 
