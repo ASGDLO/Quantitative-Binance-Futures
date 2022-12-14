@@ -77,7 +77,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 <table style="text-align:center;"><tr><td>
 <a href="https://weld.app/" target="_blank"><img src="https://nestjs.com/img/weld-logo.svg" width="140" valign="middle" /></a></td>
 <td>
-<a  target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1051310164453638194/image.png" width="4000" valign="middle" /></a></td>
+<a  target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1051310164453638194/image.png" width="200" valign="middle" /></a></td>
  <td>
 <a href="https://jetbrains.com/" target="_blank"><img src="https://nestjs.com/img/jetbrains-logo.svg" width="110" valign="middle" /></a></td><td>
 <a href="https://snyk.co/nestjs" target="_blank"><img src="https://nestjs.com/img/snyk-logo-black.png" width="185" valign="middle" /></a></td><td>
