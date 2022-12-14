@@ -7,7 +7,6 @@
 
   <p align="center">A progressive quantitative trading project to build efficient cryptocurrency trading.</p>
     <p align="center">
-  
  <p align="center"> 
 <a href="https://discord.gg/MUPX4kxD6t" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
 
