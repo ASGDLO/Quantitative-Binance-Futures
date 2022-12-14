@@ -53,8 +53,7 @@ For questions and support please use the official [Discord channel](https://disc
 <a target="_blank"><img src="https://cdn.discordapp.com/attachments/794857815709450242/1052570393979924550/image.png" width="185" valign="middle" /></a></td><td>
 <a href="https://fuseautotech.com/" target="_blank"><img src="https://nestjs.com/img/fuse-logo.svg" width="105" valign="middle" /></a></td>
 <td>
-<a href="https://ridicorp.com/career/" target="_blank"><img src="https://nestjs.com/img/ridi-logo.svg" width="200" valign="middle" /></a></td><td>
-<a href="https://www.movavi.com/imovie-for-windows.html" target="_blank"><img src="https://nestjs.com/img/movavi-logo.svg" width="105" valign="middle" /></a></td></</tr></table>
+
 
 #### Principal Sponsors
 <table style="text-align:center;"><tr>
