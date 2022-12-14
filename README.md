@@ -23,6 +23,8 @@
 
 Finding a profitable algorithm is too difficult. However, Renaissance Technologies knows how to make money in derivative markets. I believe there is alpha in the future market and crypto is the best platform we can trade on.</p>
 
+We use backtesting, paper trading, live trading, trade signal visualization, grid search, parameter optimization with Basian Optimazation.
+
 ## Philosophy
 
 <p>In recent years, thanks to Node.js, JavaScript has become the “lingua franca” of the web for both front and backend applications, giving rise to awesome projects like <a href="https://angular.io/" target="_blank">Angular</a>, <a href="https://github.com/facebook/react" target="_blank">React</a> and <a href="https://github.com/vuejs/vue" target="_blank">Vue</a> which improve developer productivity and enable the construction of fast, testable, extensible frontend applications. However, on the server-side, while there are a lot of superb libraries, helpers and tools for Node, none of them effectively solve the main problem - the architecture.</p>
