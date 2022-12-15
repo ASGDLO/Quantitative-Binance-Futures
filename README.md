@@ -71,7 +71,7 @@ For questions and support please use the official [Discord channel](https://disc
   <a href="https://pyjwt.readthedocs.io/en/stable/faq.html" target="_blank"><img src="https://10015.io/assets/tools/list/jwt-encoder-decoder.svg" width="90" valign="middle" /></a> </td><td align="center" valign="middle">
   <a href="https://arrow.apache.org/docs/python/index.html" target="_blank"><img src="https://arrow.apache.org/img/arrow-logo_horizontal_black-txt_white-bg.png" width="100" valign="middle" /></a> </td></tr><tr><td align="center" valign="middle">
   <a href="https://scipy.org/" target="_blank"><img src="https://www.fullstackpython.com/img/logos/scipy.png" width="95" valign="middle" /></a> </td><td align="center" valign="middle">
-<a href="https://thewordpoint.com/services/localization" target="_blank"><img src="https://nestjs.com/img/thewordpoint-logo.png" width="40" valign="middle" /></a></td>
+<a href="https://nautilustrader.io/" target="_blank"><img src="https://nautilustrader.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnautilus-logo-sm.7c6c9055.png&w=1920&q=75" width="40" valign="middle" /></a></td>
 <td align="center" valign="middle">
 <a href="https://scikit-optimize.github.io/stable/" target="_blank"><img src="https://scikit-optimize.github.io/stable/_static/logo.png" width="71" valign="middle" /></a></td><td align="center" valign="middle">
 <a href="https://plotly.com/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Plotly_logo_for_digital_final_%286%29.png/1200px-Plotly_logo_for_digital_final_%286%29.png" width="100" valign="middle" /></a> </td><td align="center" valign="middle">
