@@ -59,29 +59,7 @@ For questions and support please use the official [Discord channel](https://disc
   <td><a href="https://github.com/freqtrade/freqtrade" target="_blank"><img src="https://www.freqtrade.io/en/stable/assets/freqtrade_poweredby.svg" width="200" valign="middle" /></a></td>
 <td>
 <a href="https://binance-docs.github.io/apidocs/spot/en/" target="_blank"><img src="https://cryptopotato.com/wp-content/uploads/2019/10/binance_futures_logo-min-1280x720.png" width="180" valign="middle" /></a></td>
-<td>
-<a href="https://nx.dev" target="_blank"><img src="https://nestjs.com/img/nx-logo.png" height="45" valign="middle" /></a></td>
-<td>
-<a href="https://valor-software.com/" target="_blank"><img src="https://docs.nestjs.com/assets/sponsors/valor-software.png" width="170" valign="middle" /></a></td>
-<td>
-<a href="https://amplication.com/" target="_blank"><img src="https://nestjs.com/img/amplication-logo.svg" width="190" valign="middle" /></a></td>
 </tr></table>
-
-
-
-#### Silver Sponsors
-
-<table style="text-align:center;"><tr><td>
-<a href="https://neoteric.eu/" target="_blank"><img src="https://nestjs.com/img/neoteric-cut.png" width="120" valign="middle" /></a> </td><td>
-  <a href="http://gojob.com" target="_blank"><img src="http://nestjs.com/img/gojob-logo.png" valign="middle" width="100" /></a> </td><td>
-<a href="https://www.myleodsc.com/" target="_blank"><img src="https://nestjs.com/img/myleo-logo.png" width="180" valign="middle" /></td><td>
-<a href="https://careers.meetdandy.com/?gh_src=063ba61e3us" target="_blank"><img src="https://nestjs.com/img/dandy-roles-logo.svg" width="150" valign="middle" /></td><td>
-<a href="https://www.castlecraft.in" target="_blank"><img src="https://nestjs.com/img/castlecraft-logo.png" width="150" valign="middle" /></td>
-<td><a href="https://www.tinystacks.com" target="_blank"><img src="https://nestjs.com/img/tinystacks-logo.png#1" width="140" valign="middle" /></td>
-<td><a href="https://n.inc" target="_blank"><img src="https://nestjs.com/img/n-inc-logo.svg" width="120" valign="middle" /></td></tr><tr>
-<td><a href="https://bilberrry.com/" target="_blank"><img src="https://nestjs.com/img/bilberrry-logo.svg" width="180" valign="middle" /></td>
-<td><a href="https://ipinfo.ai/" target="_blank"><img src="https://nestjs.com/img/ipinfo-logo.png" width="130" valign="middle" /></td></tr>
-</table>
 
 #### Sponsors
 
