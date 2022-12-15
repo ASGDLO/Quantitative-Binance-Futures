@@ -65,7 +65,7 @@ For questions and support please use the official [Discord channel](https://disc
 
 <table><tr><td align="center" valign="middle">
 <a href="https://www.sqlalchemy.org/" target="_blank"><img src="https://www.sqlalchemy.org/img/sqla_logo.png" width="110" valign="middle" /> </a></td><td align="center" valign="middle">
-<a href="https://www.novologic.com/" target="_blank"><img src="https://nestjs.com/img/novologic.png" width="110" valign="middle" /></a> </td><td align="center" valign="middle">
+<a href="http://mrjbq7.github.io/ta-lib/" target="_blank"><img src="https://nestjs.com/img/novologic.png" width="110" valign="middle" />TA-Lib</a> </td><td align="center" valign="middle">
 <a href="https://ever.co/" target="_blank"><img src="https://nestjs.com/img/ever-logo.png" width="72" valign="middle" /></a>  </td><td align="center" valign="middle">
 <a href="https://blokt.com" target="_blank"><img src="https://nestjs.com/img/blokt-logo.png" width="120" valign="middle" /></a>  </td><td align="center" valign="middle">
   <a href="http://architectnow.net/" target="_blank"><img src="https://nestjs.com/img/architectnow.png" width="125" valign="middle" /></a> </td><td align="center" valign="middle">
