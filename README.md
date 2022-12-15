@@ -55,7 +55,7 @@ For questions and support please use the official [Discord channel](https://disc
 
 #### backtesitng sample
 <table style="text-align:center;"><tr>
-  <td><a href="https://github.com/Fractal-crypto/Blockchain_fund_nft" target="_blank"><img src="https://avatars.githubusercontent.com/u/96429375?s=200&v=4" width="100" valign="middle" /></a></td>
+  <td><a  target="_blank"><img src="https://media.discordapp.net/attachments/794921170931154967/1052923309815238676/image.png" width="100" valign="middle" /></a></td>
   <td><a href="https://github.com/freqtrade/freqtrade" target="_blank"><img src="https://www.freqtrade.io/en/stable/assets/freqtrade_poweredby.svg" width="200" valign="middle" /></a></td>
 <td>
 <a href="https://binance-docs.github.io/apidocs/spot/en/" target="_blank"><img src="https://cryptopotato.com/wp-content/uploads/2019/10/binance_futures_logo-min-1280x720.png" width="180" valign="middle" /></a></td>
