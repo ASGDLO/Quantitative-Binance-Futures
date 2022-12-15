@@ -36,7 +36,7 @@ Having traded over $5 million dollar in 6 years, I was trying to figure out the 
 
 ## Questions
 
-For questions and support please use the official [Discord channel](https://discord.gg/MUPX4kxD6t). The issue list of this repo is **exclusively** for bug reports and feature requests.
+For questions and support please use the official [Discord channel](https://discord.com/invite/BZdbEKbgDj). The issue list of this repo is **exclusively** for bug reports and feature requests.
 
 #### Trading History 2016 ~ 2022
 
