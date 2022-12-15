@@ -61,10 +61,10 @@ For questions and support please use the official [Discord channel](https://disc
 <a href="https://binance-docs.github.io/apidocs/spot/en/" target="_blank"><img src="https://cryptopotato.com/wp-content/uploads/2019/10/binance_futures_logo-min-1280x720.png" width="180" valign="middle" /></a></td>
 </tr></table>
 
-#### Sponsors
+#### Tool
 
 <table><tr><td align="center" valign="middle">
-<a href="https://www.swingdev.io" target="_blank"><img src="https://nestjs.com/img/swingdev-logo.svg#1" width="110" valign="middle" /> </a></td><td align="center" valign="middle">
+<a href="https://www.sqlalchemy.org/" target="_blank"><img src="https://www.sqlalchemy.org/img/sqla_logo.png" width="110" valign="middle" /> </a></td><td align="center" valign="middle">
 <a href="https://www.novologic.com/" target="_blank"><img src="https://nestjs.com/img/novologic.png" width="110" valign="middle" /></a> </td><td align="center" valign="middle">
 <a href="https://ever.co/" target="_blank"><img src="https://nestjs.com/img/ever-logo.png" width="72" valign="middle" /></a>  </td><td align="center" valign="middle">
 <a href="https://blokt.com" target="_blank"><img src="https://nestjs.com/img/blokt-logo.png" width="120" valign="middle" /></a>  </td><td align="center" valign="middle">
