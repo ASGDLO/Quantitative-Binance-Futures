@@ -55,10 +55,10 @@ For questions and support please use the official [Discord channel](https://disc
 
 #### Related Project
 <table style="text-align:center;"><tr>
-  <td><a href="https://github.com/Fractal-crypto/Blockchain_fund_nft" target="_blank"><img src="https://avatars.githubusercontent.com/u/96429375?s=200&v=4" width="200" valign="middle" /></a></td>
+  <td><a href="https://github.com/Fractal-crypto/Blockchain_fund_nft" target="_blank"><img src="https://avatars.githubusercontent.com/u/96429375?s=200&v=4" width="100" valign="middle" /></a></td>
   <td><a href="https://github.com/freqtrade/freqtrade" target="_blank"><img src="https://www.freqtrade.io/en/stable/assets/freqtrade_poweredby.svg" width="200" valign="middle" /></a></td>
 <td>
-<a href="https://github.com/Sanofi-IADC" target="_blank"><img src="https://docs.nestjs.com/assets/sponsors/sanofi.png" width="180" valign="middle" /></a></td>
+<a href="https://binance-docs.github.io/apidocs/spot/en/" target="_blank"><img src="https://user-images.githubusercontent.com/1294454/117738721-668c8d80-b205-11eb-8c49-3fad84c4a07f.jpg" width="180" valign="middle" /></a></td>
 <td>
 <a href="https://nx.dev" target="_blank"><img src="https://nestjs.com/img/nx-logo.png" height="45" valign="middle" /></a></td>
 <td>
