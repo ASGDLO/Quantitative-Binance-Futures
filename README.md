@@ -103,16 +103,8 @@ For questions and support please use the official [Discord channel](https://disc
  <td align="center" valign="middle"><a href="https://doppio.sh/" target="_blank"><img src="https://nestjs.com/img/dopiosh-logo.png" width="50" valign="middle" /></a></td>
   </tr></table>
 
-## Backers
-
-<a href="https://opencollective.com/nest" target="_blank"><img src="https://opencollective.com/nest/backers.svg?width=1000"></a>
-
 ## Stay in touch
 
-* Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-* Website - [https://nestjs.com](https://nestjs.com/)
-* Twitter - [@nestframework](https://twitter.com/nestframework)
+* Author - [ASGDLO](https://github.com/ASGDLO)
+* Twitter - [NFT](https://twitter.com/EthanCo76960550)
 
-## License
-
-Nest is [MIT licensed](LICENSE).
