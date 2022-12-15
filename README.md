@@ -84,24 +84,7 @@ For questions and support please use the official [Discord channel](https://disc
   <a href="https://genuinebee.com/" target="_blank"><img src="https://nestjs.com/img/genuinebee.svg" width="97" valign="middle" /></a> </td>
 <td align="center" valign="middle"><a href="https://sanyodigital.com/" target="_blank"><img src="https://nestjs.com/img/sanyo-digital.png" width="130" valign="middle" /></a></td></tr><tr><td align="center" valign="middle"><a href="https://vpn-review.com/vpn-for-torrenting" target="_blank"><img src="https://nestjs.com/img/vpn-review-logo.png" width="85" valign="middle" /></a></td><td align="center" valign="middle"><a href="https://lambda-it.ch/" target="_blank"><img src="https://nestjs.com/img/lambda-it-logo.svg" width="115" valign="middle" /></a></td><td align="center" valign="middle"><a href="https://pickwriters.com/top-10-translation-services" target="_blank"><img src="https://nestjs.com/img/pickwriters-logo.png" width="40" valign="middle" /></a></td><td align="center" valign="middle"><a href="https://thewordpoint.com/services/localization" target="_blank"><img src="https://nestjs.com/img/thewordpoint-logo.png" width="40" valign="middle" /></a></td>
 <td align="center" valign="middle"><a href="https://meercode.io/" target="_blank"><img src="https://nestjs.com/img/meercode-logo.png" width="60" valign="middle" /></a></td>
-  <td align="center" valign="middle"><a href="https://www.najlepszeplatformyforex.pl/blog/broker-xtb/" target="_blank"><img src="https://nestjs.com/img/npf-logo.jpg" width="200" valign="middle" /></a></td></tr><tr>
-<td align="center" valign="middle"><a href="https://thestandarddaily.com/" target="_blank"><img src="https://nestjs.com/img/the-standard-daily-logo.png" width="180" valign="middle" /></a></td>
-<td align="center" valign="middle"><a href="https://houseofangular.io/" target="_blank"><img src="https://nestjs.com/img/house-of-angular.png" width="100" valign="middle" /></a></td>
-<td align="center" valign="middle"><a href="https://rocketech.it/cases/?utm_source=google&utm_medium=badge&utm_campaign=nestjs" target="_blank"><img src="https://nestjs.com/img/rocketech-logo.svg" width="110" valign="middle" /></a></td>
-  <td align="center" valign="middle"><a href="https://www.bystored.com/" target="_blank"><img src="https://nestjs.com/img/stored-logo.svg" width="110" valign="middle" /></a></td>
-  <td align="center" valign="middle"><a href="https://studyclerk.com/pay-for-research-paper" target="_blank"><img src="https://nestjs.com/img/studyclerk-logo.png" width="125" valign="middle" /></a></td><td align="center" valign="middle"><a href="https://xyndata.com" target="_blank"><img src="https://nestjs.com/img/xyndata-logo.png" width="125" valign="middle" /></a></td></tr><tr>
-  <td align="center" valign="middle"><a href="https://www.anonymistic.com/" target="_blank"><img src="https://nestjs.com/img/anonymistic-logo.png" width="125" valign="middle" /></a></td>
-<td align="center" valign="middle"><a href="https://www.naologic.com/" target="_blank"><img src="https://nestjs.com/img/naologic-logo.svg" width="125" valign="middle" /></a></td>
-  <td align="center" valign="middle"><a href="https://messaged.com/" target="_blank"><img src="https://nestjs.com/img/messaged-logo.png" width="50" valign="middle" /></a></td>
-  <td align="center" valign="middle"><a href="https://triplecore.io" target="_blank"><img src="https://nestjs.com/img/triplecore-logo.svg" width="50" valign="middle" /></a></td>
-   <td align="center" valign="middle"><a href="https://klqc.de" target="_blank"><img src="https://nestjs.com/img/klcqcl-logo.png" width="120" valign="middle" /></a></td>
-   <td align="center" valign="middle"><a href="https://thecasinowizard.com/bonuses/no-deposit-bonuses/" target="_blank"><img src="https://nestjs.com/img/casinowizard-logo.png" width="120" valign="middle" /></a></td></tr><tr>
-     <td align="center" valign="middle"><a href="https://polygon-software.ch/" target="_blank"><img src="https://nestjs.com/img/polygon-logo.svg" width="120" valign="middle" /></a></td>
-   <td align="center" valign="middle"><a href="https://mobilereality.pl/" target="_blank"><img src="https://nestjs.com/img/mobile-reality-logo.png" width="45" valign="middle" /></a></td>
-     <td align="center" valign="middle"><a href="https://boringowl.io/" target="_blank"><img src="https://nestjs.com/img/boringowl-logo.svg" width="120" valign="middle" /></a></td>
- <td align="center" valign="middle"><a href="https://www.mobilefactory.jp/" target="_blank"><img src="https://nestjs.com/img/mobilefactory-logo.png" width="100" valign="middle" /></a></td>
- <td align="center" valign="middle"><a href="https://nordbot.app/" target="_blank"><img src="https://nestjs.com/img/nordbot-logo.png" width="120" valign="middle" /></a></td>
- <td align="center" valign="middle"><a href="https://doppio.sh/" target="_blank"><img src="https://nestjs.com/img/dopiosh-logo.png" width="50" valign="middle" /></a></td>
+ 
   </tr></table>
 
 ## Stay in touch
