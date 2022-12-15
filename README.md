@@ -65,9 +65,9 @@ For questions and support please use the official [Discord channel](https://disc
 
 <table><tr><td align="center" valign="middle">
 <a href="https://www.sqlalchemy.org/" target="_blank"><img src="https://www.sqlalchemy.org/img/sqla_logo.png" width="110" valign="middle" /> </a></td><td align="center" valign="middle">
-<a href="http://mrjbq7.github.io/ta-lib/" target="_blank"><img src="https://1.bp.blogspot.com/-TQhkUPlWydY/YK7gRwZ__iI/AAAAAAAACHk/LWlOYayNvXQHiAsk9Ad9iN3e6k_0cGuSgCLcBGAsYHQ/s691/talib.png" width="110" valign="middle" /></a> </td><td align="center" valign="middle">
-<a href="https://ever.co/" target="_blank"><img src="https://nestjs.com/img/ever-logo.png" width="72" valign="middle" /></a>  </td><td align="center" valign="middle">
-<a href="https://blokt.com" target="_blank"><img src="https://nestjs.com/img/blokt-logo.png" width="120" valign="middle" /></a>  </td><td align="center" valign="middle">
+<a href="http://mrjbq7.github.io/ta-lib/" target="_blank"><img src="https://1.bp.blogspot.com/-TQhkUPlWydY/YK7gRwZ__iI/AAAAAAAACHk/LWlOYayNvXQHiAsk9Ad9iN3e6k_0cGuSgCLcBGAsYHQ/s691/talib.png" width="190" valign="middle" /></a> </td><td align="center" valign="middle">
+<a href="https://github.com/tiangolo/fastapi" target="_blank"><img src="https://camo.githubusercontent.com/86d9ca3437f5034da052cf0fd398299292aab0e4479b58c20f2fc37dd8ccbe05/68747470733a2f2f666173746170692e7469616e676f6c6f2e636f6d2f696d672f6c6f676f2d6d617267696e2f6c6f676f2d7465616c2e706e67" width="72" valign="middle" /></a>  </td><td align="center" valign="middle">
+<a href="https://github.com/encode/uvicorn" target="_blank"><img src="https://raw.githubusercontent.com/tomchristie/uvicorn/master/docs/uvicorn.png" width="120" valign="middle" /></a>  </td><td align="center" valign="middle">
   <a href="http://architectnow.net/" target="_blank"><img src="https://nestjs.com/img/architectnow.png" width="125" valign="middle" /></a> </td><td align="center" valign="middle">
   <a href="https://quander.io/" target="_blank"><img src="https://nestjs.com/img/quander.png" width="100" valign="middle" /></a> </td></tr><tr><td align="center" valign="middle">
   <a href="https://mantro.net/" target="_blank"><img src="https://nestjs.com/img/mantro-logo.svg" width="95" valign="middle" /></a> </td><td align="center" valign="middle">
