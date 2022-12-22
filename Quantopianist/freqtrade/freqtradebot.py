@@ -4,30 +4,289 @@ Freqtrade is the main module of this bot. It contains the class Freqtrade()
 import copy
 import logging
 import traceback
-from datetime import datetime, timezone
+from datetime import datetime, time, timedelta, timezone
 from math import isclose
 from threading import Lock
 from typing import Any, Dict, List, Optional, Tuple
 
+from schedule import Scheduler
+
 from freqtrade import __version__, constants
 from freqtrade.configuration import validate_config_consistency
+from freqtrade.constants import BuySell, LongShort
 from freqtrade.data.converter import order_book_to_dataframe
 from freqtrade.data.dataprovider import DataProvider
 from freqtrade.edge import Edge
-from freqtrade.enums import RPCMessageType, RunMode, SellType, State
+from freqtrade.enums import (ExitCheckTuple, ExitType, RPCMessageType, RunMode, SignalDirection,
+                             State, TradingMode)
 from freqtrade.exceptions import (DependencyException, ExchangeError, InsufficientFundsError,
                                   InvalidOrderException, PricingError)
 from freqtrade.exchange import timeframe_to_minutes, timeframe_to_seconds
+from freqtrade.exchange.exchange import timeframe_to_next_date
 from freqtrade.misc import safe_value_fallback, safe_value_fallback2
 from freqtrade.mixins import LoggingMixin
-from freqtrade.persistence import Order, PairLocks, Trade, cleanup_db, init_db
+from freqtrade.persistence import Order, PairLocks, Trade, init_db
 from freqtrade.plugins.pairlistmanager import PairListManager
 from freqtrade.plugins.protectionmanager import ProtectionManager
 from freqtrade.resolvers import ExchangeResolver, StrategyResolver
 from freqtrade.rpc import RPCManager
-from freqtrade.strategy.interface import IStrategy, SellCheckTuple
+from freqtrade.strategy.interface import IStrategy
 from freqtrade.strategy.strategy_wrapper import strategy_safe_wrapper
+from freqtrade.util import FtPrecise
 from freqtrade.wallets import Wallets
+
+
+logger = logging.getLogger(__name__)
+
+
+class FreqtradeBot(LoggingMixin):
+    """
+    Freqtrade is the main class of the bot.
+    This is from here the bot start its logic.
+    """
+
+    def __init__(self, config: Dict[str, Any]) -> None:
+        """
+        Init all variables and objects the bot needs to work
+        :param config: configuration dict, you can use Configuration.get_config()
+        to get the config dict.
+        """
+        self.active_pair_whitelist: List[str] = []
+
+        logger.info('Starting freqtrade %s', __version__)
+
+        # Init bot state
+        self.state = State.STOPPED
+
+        # Init objects
+        self.config = config
+
+        self.strategy: IStrategy = StrategyResolver.load_strategy(self.config)
+
+        # Check config consistency here since strategies can set certain options
+        validate_config_consistency(config)
+
+        self.exchange = ExchangeResolver.load_exchange(
+            self.config['exchange']['name'], self.config, load_leverage_tiers=True)
+
+        init_db(self.config['db_url'])
+
+        self.wallets = Wallets(self.config, self.exchange)
+
+        PairLocks.timeframe = self.config['timeframe']
+
+        # RPC runs in separate threads, can start handling external commands just after
+        # initialization, even before Freqtradebot has a chance to start its throttling,
+        # so anything in the Freqtradebot instance should be ready (initialized), including
+        # the initial state of the bot.
+        # Keep this at the end of this initialization method.
+        self.rpc: RPCManager = RPCManager(self)
+
+        self.pairlists = PairListManager(self.exchange, self.config)
+
+        self.dataprovider = DataProvider(self.config, self.exchange, self.pairlists)
+
+        # Attach Dataprovider to strategy instance
+        self.strategy.dp = self.dataprovider
+        # Attach Wallets to strategy instance
+        self.strategy.wallets = self.wallets
+
+        # Initializing Edge only if enabled
+        self.edge = Edge(self.config, self.exchange, self.strategy) if \
+            self.config.get('edge', {}).get('enabled', False) else None
+
+        self.active_pair_whitelist = self._refresh_active_whitelist()
+
+        # Set initial bot state from config
+        initial_state = self.config.get('initial_state')
+        self.state = State[initial_state.upper()] if initial_state else State.STOPPED
+
+        # Protect exit-logic from forcesell and vice versa
+        self._exit_lock = Lock()
+        LoggingMixin.__init__(self, logger, timeframe_to_seconds(self.strategy.timeframe))
+
+        self.trading_mode: TradingMode = self.config.get('trading_mode', TradingMode.SPOT)
+
+        self._schedule = Scheduler()
+
+        if self.trading_mode == TradingMode.FUTURES:
+
+            def update():
+                self.update_funding_fees()
+                self.wallets.update()
+
+            # TODO: This would be more efficient if scheduled in utc time, and performed at each
+            # TODO: funding interval, specified by funding_fee_times on the exchange classes
+            for time_slot in range(0, 24):
+                for minutes in [0, 15, 30, 45]:
+                    t = str(time(time_slot, minutes, 2))
+                    self._schedule.every().day.at(t).do(update)
+        self.last_process = datetime(1970, 1, 1, tzinfo=timezone.utc)
+
+        self.strategy.ft_bot_start()
+        # Initialize protections AFTER bot start - otherwise parameters are not loaded.
+        self.protections = ProtectionManager(self.config, self.strategy.protections)
+
+    def notify_status(self, msg: str) -> None:
+        """
+        Public method for users of this class (worker, etc.) to send notifications
+        via RPC about changes in the bot status.
+        """
+        self.rpc.send_msg({
+            'type': RPCMessageType.STATUS,
+            'status': msg
+        })
+
+    def cleanup(self) -> None:
+        """
+        Cleanup pending resources on an already stopped bot
+        :return: None
+        """
+        logger.info('Cleaning up modules ...')
+
+        if self.config['cancel_open_orders_on_exit']:
+            self.cancel_all_open_orders()
+
+        self.check_for_open_trades()
+
+        self.rpc.cleanup()
+        Trade.commit()
+        self.exchange.close()
+
+    def startup(self) -> None:
+        """
+        Called on startup and after reloading the bot - triggers notifications and
+        performs startup tasks
+        """
+        self.rpc.startup_messages(self.config, self.pairlists, self.protections)
+        # Update older trades with precision and precision mode
+        self.startup_backpopulate_precision()
+        if not self.edge:
+            # Adjust stoploss if it was changed
+            Trade.stoploss_reinitialization(self.strategy.stoploss)
+
+        # Only update open orders on startup
+        # This will update the database after the initial migration
+        self.startup_update_open_orders()
+
+    def process(self) -> None:
+        """
+        Queries the persistence layer for open trades and handles them,
+        otherwise a new trade is created.
+        :return: True if one or more trades has been created or closed, False otherwise
+        """
+
+        # Check whether markets have to be reloaded and reload them when it's needed
+        self.exchange.reload_markets()
+
+        self.update_closed_trades_without_assigned_fees()
+
+        # Query trades from persistence layer
+        trades = Trade.get_open_trades()
+
+        self.active_pair_whitelist = self._refresh_active_whitelist(trades)
+
+        # Refreshing candles
+        self.dataprovider.refresh(self.pairlists.create_pair_list(self.active_pair_whitelist),
+                                  self.strategy.gather_informative_pairs())
+
+        strategy_safe_wrapper(self.strategy.bot_loop_start, supress_error=True)()
+
+        self.strategy.analyze(self.active_pair_whitelist)
+
+        with self._exit_lock:
+            # Check for exchange cancelations, timeouts and user requested replace
+            self.manage_open_orders()
+
+        # Protect from collisions with force_exit.
+        # Without this, freqtrade my try to recreate stoploss_on_exchange orders
+        # while exiting is in process, since telegram messages arrive in an different thread.
+        with self._exit_lock:
+            trades = Trade.get_open_trades()
+            # First process current opened trades (positions)
+            self.exit_positions(trades)
+
+        # Check if we need to adjust our current positions before attempting to buy new trades.
+        if self.strategy.position_adjustment_enable:
+            with self._exit_lock:
+                self.process_open_trade_positions()
+
+        # Then looking for buy opportunities
+        if self.get_free_open_trades():
+            self.enter_positions()
+        if self.trading_mode == TradingMode.FUTURES:
+            self._schedule.run_pending()
+        Trade.commit()
+        self.rpc.process_msg_queue(self.dataprovider._msg_queue)
+        self.last_process = datetime.now(timezone.utc)
+
+    def process_stopped(self) -> None:
+        """
+        Close all orders that were left open
+        """
+        if self.config['cancel_open_orders_on_exit']:
+            self.cancel_all_open_orders()
+
+    def check_for_open_trades(self):
+        """
+        Notify the user when the bot is stopped (not reloaded)
+        and there are still open trades active.
+        """
+        open_trades = Trade.get_open_trades()
+
+        if len(open_trades) != 0 and self.state != State.RELOAD_CONFIG:
+            msg = {
+                'type': RPCMessageType.WARNING,
+                'status':
+                    f"{len(open_trades)} open trades active.\n\n"
+                    f"Handle these trades manually on {self.exchange.name}, "
+                    f"or '/start' the bot again and use '/stopbuy' "
+                    f"to handle open trades gracefully. \n"
+                    f"{'Note: Trades are simulated (dry run).' if self.config['dry_run'] else ''}",
+            }
+            self.rpc.send_msg(msg)
+
+    def _refresh_active_whitelist(self, trades: List[Trade] = []) -> List[str]:
+        """
+        Refresh active whitelist from pairlist or edge and extend it with
+        pairs that have open trades.
+        """
+        # Refresh whitelist
+        self.pairlists.refresh_pairlist()
+        _whitelist = self.pairlists.whitelist
+
+        # Calculating Edge positioning
+        if self.edge:
+            self.edge.calculate(_whitelist)
+            _whitelist = self.edge.adjust(_whitelist)
+
+        if trades:
+            # Extend active-pair whitelist with pairs of open trades
+            # It ensures that candle (OHLCV) data are downloaded for open trades as well
+            _whitelist.extend([trade.pair for trade in trades if trade.pair not in _whitelist])
+        return _whitelist
+
+    def get_free_open_trades(self) -> int:
+        """
+        Return the number of free open trades slots or 0 if
+        max number of open trades reached
+        """
+        open_trades = Trade.get_open_trade_count()
+        return max(0, self.config['max_open_trades'] - open_trades)
+
+    def update_funding_fees(self):
+        if self.trading_mode == TradingMode.FUTURES:
+            trades = Trade.get_open_trades()
+            for trade in trades:
+                funding_fees = self.exchange.get_funding_fees(
+                    pair=trade.pair,
+                    amount=trade.amount,
+                    is_short=trade.is_short,
+                    open_date=trade.open_date_utc
+                )
+                trade.funding_fees = funding_fees
+        else:
+            return 0.0
 
 
 logger = logging.getLogger(__name__)
