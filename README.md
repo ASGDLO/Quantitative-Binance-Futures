@@ -18,7 +18,7 @@
 
 ## Description
 
-Finding a profitable algorithm is too difficult. However, Renaissance Technologies knows how to make money in derivative markets. I believe there is alpha in the future market and crypto is the best platform we can trade on.</p>
+Finding a profitable algorithm is too difficult. However, Renaissance Technologies knows how to make money in derivative markets. I believe there is alpha in the futures market and crypto is the best platform we can trade on.</p>
 
 We use backtesting, paper trading, live trading, trade signal visualization, grid search, find the best parameter with Machine Learning.
 
