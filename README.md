@@ -50,7 +50,7 @@ For questions and support please use the official [Discord channel](https://disc
 <td>
 <a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1052580607978385488/image.png?width=624&height=630" width="185" valign="middle" /></a></td>
 <td>
-<a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1052581168840712242/image.png" width="185" valign="middle" /></a></td>
+<a target="_blank"><img src="https://media.discordapp.net/attachments/1016191694028410981/1058914690530562098/image.png?width=766&height=630" width="185" valign="middle" /></a></td>
 </table>
 
 #### backtesitng sample
