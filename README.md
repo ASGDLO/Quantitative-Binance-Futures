@@ -20,7 +20,7 @@
 
 Finding a profitable algorithm is too difficult. However, Renaissance Technologies knows how to make money in derivative markets. I believe there is alpha in the futures market and crypto is the best platform we can trade on.</p>
 
-We use backtesting, paper trading, live trading, trade signal visualization, grid search, find the best parameter with Machine Learning.
+We use backtesting, paper trading, live trading, trade signal visualization, find the best parameter with Machine Learning.
 
 ## Philosophy
 
@@ -50,7 +50,7 @@ For questions and support please use the official [Discord channel](https://disc
 <td>
 <a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1052580607978385488/image.png?width=624&height=630" width="185" valign="middle" /></a></td>
 <td>
-<a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1052581168840712242/image.png" width="185" valign="middle" /></a></td>
+<a target="_blank"><img src="https://media.discordapp.net/attachments/1016191694028410981/1058914690530562098/image.png?width=766&height=630" width="185" valign="middle" /></a></td>
 </table>
 
 #### backtesitng sample
