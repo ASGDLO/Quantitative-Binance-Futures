@@ -86,7 +86,7 @@ For questions and support please use the official [Discord channel](https://disc
 <a href="https://github.com/ccxt/ccxt" target="_blank"><img src="https://user-images.githubusercontent.com/1294454/112665445-2008ec80-8e6c-11eb-9647-623a347ddade.png" width="120" valign="middle" /></a></td></tr><tr><td align="center" valign="middle">
 <a href="https://docs.tokensets.com/" target="_blank"><img src="https://images.squarespace-cdn.com/content/v1/5dc59d3f6301105b02894f5f/1580228735630-4AH0H4LTN0UOEJ4UIRIG/Aave+Ghost+banner.png" width="120" valign="middle" /></a> </td><td align="center" valign="middle">
 <a href="https://github.com/man-c/pycoingecko" target="_blank"><img src="https://static.coingecko.com/s/coingecko-branding-guide-8447de673439420efa0ab1e0e03a1f8b0137270fbc9c0b7c086ee284bd417fa1.png" width="80" valign="middle" /></a> </td><td align="center" valign="middle">
-<a  target="_blank"><img src="https://uploads-ssl.webflow.com/619811f15cf1e46af063c233/620dc6482e585bbdb5feff64_aws-logo.png" width="120" valign="middle" /></a></td><td align="center" valign="middle"><a href="https://arbitrum.io/" target="_blank"><img src="https://arbiscan.io/images/logo-Arbiscan.svg?v=0.0.4" width="120" valign="middle" /></a></td>
+<a  target="_blank"><img src="https://uploads-ssl.webflow.com/619811f15cf1e46af063c233/620dc6482e585bbdb5feff64_aws-logo.png" width="120" valign="middle" /></a></td><td align="center" valign="middle"><a href="https://arbitrum.io/" target="_blank"><img src="https://i0.wp.com/www.australtech.net/wp-content/uploads/2019/04/docker_facebook_share-300x256.png" width="120" valign="middle" /></a></td>
   </td>
  
   </tr></table>
