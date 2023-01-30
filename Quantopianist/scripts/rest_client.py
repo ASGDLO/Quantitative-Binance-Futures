@@ -5,7 +5,7 @@ Can be used as an alternate to Telegram
 
 Should not import anything from freqtrade,
 so it can be used as a standalone script.
-"""
+""" 
 
 import argparse
 import inspect
