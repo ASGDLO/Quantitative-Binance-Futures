@@ -25,7 +25,7 @@ nav:
     - Utility Sub-commands: utils.md
     - Plotting: plotting.md
     - Exchange-specific Notes: exchanges.md
-    - Data Analysis:
+    - Data Analysis: 
         - Jupyter Notebooks: data-analysis.md
         - Strategy analysis: strategy_analysis_example.md
     - Advanced Topics:
