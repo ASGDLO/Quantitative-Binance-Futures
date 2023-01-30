@@ -31,7 +31,7 @@ function check_installed_python() {
         which $PYTHON
         if [ $? -eq 0 ]; then
             echo "using ${PYTHON}"
-            check_installed_pip
+            check_installed_pip 
             return
         fi
     done
