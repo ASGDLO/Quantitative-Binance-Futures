@@ -5,3 +5,4 @@ omit =
     freqtrade/vendor/*
     freqtrade/__main__.py
     tests/*
+ 
