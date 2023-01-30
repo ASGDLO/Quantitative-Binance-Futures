@@ -25,7 +25,7 @@ if [ "${GITHUB_EVENT_NAME}" = "schedule" ]; then
         -f docker/Dockerfile.armhf \
         --platform ${PI_PLATFORM} \
         -t ${IMAGE_NAME}:${TAG_PI} --push .
-else
+else 
     echo "event ${GITHUB_EVENT_NAME}: building with cache"
     # Build regular image
     docker pull ${IMAGE_NAME}:${TAG}
