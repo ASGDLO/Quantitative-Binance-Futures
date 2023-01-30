@@ -35,7 +35,7 @@ fastapi==0.75.0
 uvicorn==0.17.6
 pyjwt==2.3.0
 aiofiles==0.8.0
-psutil==5.9.0
+psutil==5.9.0 
 
 # Support for colorized terminal output
 colorama==0.4.4

@@ -32,7 +32,7 @@ jupyter = [
     ]
 
 all_extra = plot + develop + jupyter + hyperopt
-
+ 
 setup(
     tests_require=[
         'pytest',

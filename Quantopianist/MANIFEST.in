@@ -4,3 +4,4 @@ recursive-include freqtrade *.py
 recursive-include freqtrade/templates/ *.j2 *.ipynb
 include freqtrade/rpc/api_server/ui/fallback_file.html
 include freqtrade/rpc/api_server/ui/favicon.ico
+ 
