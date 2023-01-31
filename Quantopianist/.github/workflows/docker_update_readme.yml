@@ -16,3 +16,4 @@ jobs:
         DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKERHUB_REPOSITORY: freqtradeorg/freqtrade
 
+ 
