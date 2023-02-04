@@ -11,7 +11,7 @@ from freqtrade.resolvers import IResolver
 logger = logging.getLogger(__name__)
 
 
-class ExchangeResolver(IResolver):
+class ExchangeResolver(IResolver): 
     """
     This class contains all the logic to load a custom exchange class
     """
