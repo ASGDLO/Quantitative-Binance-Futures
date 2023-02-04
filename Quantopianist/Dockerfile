@@ -45,7 +45,7 @@ ENV LD_LIBRARY_PATH /usr/local/lib
 
 COPY --from=python-deps --chown=ftuser:ftuser /home/ftuser/.local /home/ftuser/.local
 
-USER ftuser
+USER ftuser 
 # Install and execute
 COPY --chown=ftuser:ftuser . /freqtrade/
 
