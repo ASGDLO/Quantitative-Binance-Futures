@@ -20,13 +20,13 @@
 
 Finding a profitable algorithm is too difficult. However, Renaissance Technologies knows how to make money in derivative markets. I believe there is alpha in the futures market and crypto is the best platform we can trade on.</p>
 
-We use backtesting, paper trading, live trading, trade signal visualization, find the best parameter with Machine Learning.
+We use backtesting, paper trading, live trading, trade signal visualization and find the best parameter with Machine Learning.
 
 ## Philosophy
 
 <p>Money is not just purchasing power or a position in life. This can create more value in the world by helping people achieve the right goals. </p>
 
-Having traded over $5 million dollar in 6 years, I was trying to figure out the best way to make money in the market. Humans cannot always make the right decisions and read tons of data. Quantitative trading is the best way to make good decisions in the market.
+Having traded over $5 million dollars in 6 years, I was trying to figure out the best way to make money in the market. Humans cannot always make the right decisions and read tons of data. Quantitative trading is the best way to make good decisions in the market.
 
 ## Getting started
 
