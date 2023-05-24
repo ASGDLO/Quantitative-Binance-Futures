@@ -90,7 +90,7 @@ For questions and support please use the official [Discord channel](https://disc
   </td>
  
   </tr></table>
-
+ 
 ## Stay in touch
 
 * Author - [ASGDLO](https://github.com/ASGDLO)
