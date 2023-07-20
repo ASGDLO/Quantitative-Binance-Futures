@@ -3,7 +3,7 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://cdn.discordapp.com/icons/875346679568691250/5b6795312241b769b6085a4507be94d4.webp?size=96" width="120" alt="Nest Logo" /></a>
 </p>
-
+ 
 
   <p align="center">A progressive quantitative trading project to build efficient cryptocurrency trading.</p>
  <p align="center"> 
