@@ -50,6 +50,7 @@ def init_db(db_url: str) -> None:
         raise OperationalException(f"Given value for db_url: '{db_url}' "
                                    f"is no valid database URL! (See {_SQL_DOCS_URL})")
 
+    
     # https://docs.sqlalchemy.org/en/13/orm/contextual.html#thread-local-scope
     # Scoped sessions proxy requests to the appropriate thread-local session.
     # We should use the scoped_session object - not a seperately initialized version
