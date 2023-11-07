@@ -11,7 +11,6 @@ from typing import Any, Dict, Iterator, List, Optional, Sequence, Tuple, Union
 from freqtrade.misc import deep_merge_dicts, json_load
 from freqtrade.optimize.hyperopt_tools import HyperoptTools
 
-
 with suppress(ImportError):
     from skopt.space import Integer, Real, Categorical
     from freqtrade.optimize.space import SKDecimal
