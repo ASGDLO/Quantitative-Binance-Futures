@@ -9,7 +9,6 @@ from freqtrade.exchange import (available_exchanges, is_exchange_known_ccxt,
 
 logger = logging.getLogger(__name__)
 
-
 def check_exchange(config: Dict[str, Any], check_for_bad: bool = True) -> bool:
     """
     Check if the exchange name in the config file is supported by Freqtrade
