@@ -19,7 +19,6 @@ from freqtrade.exceptions import ExchangeError, OperationalException
 from freqtrade.exchange import Exchange, timeframe_to_seconds
 from freqtrade.util import PeriodicCache
 
-
 logger = logging.getLogger(__name__)
 
 NO_EXCHANGE_EXCEPTION = 'Exchange is not available to DataProvider.'
