@@ -51,6 +51,8 @@ For questions and support please use the official [Discord channel](https://disc
 <a target="_blank"><img src="https://media.discordapp.net/attachments/794857815709450242/1052580607978385488/image.png?width=624&height=630" width="185" valign="middle" /></a></td>
 <td>
 <a target="_blank"><img src="https://media.discordapp.net/attachments/1016191694028410981/1058914690530562098/image.png?width=766&height=630" width="185" valign="middle" /></a></td>
+<td>
+<a target="_blank"><img src="https://cdn.discordapp.com/attachments/1019432625254965298/1173488295985033236/image.png?ex=65642324&is=6551ae24&hm=770e3cb08d6b1718e6899aa22274e36b76d6d5f2a090c066ce1fe7d900e4f3e1&" width="185" valign="middle" /></a></td>
 </table>
 
 #### backtesitng sample
