@@ -52,6 +52,9 @@ For questions and support please use the official [Discord channel](https://disc
 <td>
 <a target="_blank"><img src="https://media.discordapp.net/attachments/1016191694028410981/1058914690530562098/image.png?width=766&height=630" width="185" valign="middle" /></a></td>
 
+<td>
+<a target="_blank"><img src="https://media.discordapp.net/attachments/794921170931154967/1173497313075925102/image.png?ex=65642b89&is=6551b689&hm=45698ede07c641e29cfa88f9e99bd6946dd112cbc1cc2d6ad2da997b4f406441&=" width="185" valign="middle" /></a></td>
+
 </table>
 
 #### Hyperparameter optimization
