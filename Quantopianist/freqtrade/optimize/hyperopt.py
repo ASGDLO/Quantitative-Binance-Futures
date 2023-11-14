@@ -139,16 +139,20 @@ class Hyperopt:
                 logger.info(f"Removing `{p}`.")
                 p.unlink()
 
-    def _get_params_dict(self, dimensions: List[Dimension], raw_params: List[Any]) -> Dict:
+def _get_params_dict(self, dimensions: List[Dimension], raw_params: List[Any]) -> Dict[str, Any]:
+        """
+        Maps each dimension name to its corresponding parameter.
 
-        # Ensure the number of dimensions match
-        # the number of parameters in the list.
+        :param dimensions: A list of Dimension objects.
+        :param raw_params: A list of parameter values.
+        :return: A dictionary mapping each dimension's name to its parameter.
+        :raises ValueError: If the number of dimensions and parameters do not match.
+        """
         if len(raw_params) != len(dimensions):
-            raise ValueError('Mismatch in number of search-space dimensions.')
+            raise ValueError(f'Expected {len(dimensions)} parameters, but got {len(raw_params)}.')
 
-        # Return a dict where the keys are the names of the dimensions
-        # and the values are taken from the list of parameters.
-        return {d.name: v for d, v in zip(dimensions, raw_params)}
+        return {dimension.name: value for dimension, value in zip(dimensions, raw_params)}
+
 
     def _save_result(self, epoch: Dict) -> None:
         """
