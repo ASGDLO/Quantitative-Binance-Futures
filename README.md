@@ -64,7 +64,7 @@ For questions and support please use the official [Discord channel](https://disc
 
 </tr></table>
 
-#### backtesitng sample
+#### backtesitng result
 <table style="text-align:center;"><tr>
   <td><a  target="_blank"><img src="https://media.discordapp.net/attachments/794921170931154967/1052924664558653500/image.png" width="100" valign="middle" /></a></td>
   <td><a target="_blank"><img src="https://media.discordapp.net/attachments/794921170931154967/1052924242066423858/image.png" width="100" valign="middle" /></a></td>
