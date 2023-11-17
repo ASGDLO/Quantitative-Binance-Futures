@@ -35,7 +35,6 @@ class Binance(Exchange):
         "stoploss_order_types": {"limit": "stop"},
         "tickers_have_price": False,
     }
-
     _supported_trading_mode_margin_pairs: List[Tuple[TradingMode, MarginMode]] = [
         # TradingMode.SPOT always supported and not required in this list
         # (TradingMode.MARGIN, MarginMode.CROSS),
