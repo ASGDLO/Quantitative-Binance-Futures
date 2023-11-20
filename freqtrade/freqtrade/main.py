@@ -51,19 +51,21 @@ def main(sysargv: Optional[List[str]] = None) -> None:
                 "`freqtrade --help` or `freqtrade <command> --help`."
             )
 
-    except SystemExit as e:  # pragma: no cover
-        return_code = e
+
+
+    except SystemExit as e:
+        return_code = e.code  # Extracting the exit code directly
     except KeyboardInterrupt:
-        logger.info('SIGINT received, aborting ...')
+        logger.info('SIGINT received, aborting...')
         return_code = 0
     except FreqtradeException as e:
-        logger.error(str(e))
+        logger.error(f'Freqtrade exception: {e}')
         return_code = 2
-    except Exception:
-        logger.exception('Fatal exception!')
+    except Exception as e:
+        logger.exception(f'Fatal exception: {e}')
+        return_code = 1  # A general non-zero return code for unexpected exceptions
     finally:
         sys.exit(return_code)
-
 
 if __name__ == '__main__':  # pragma: no cover
     main()
