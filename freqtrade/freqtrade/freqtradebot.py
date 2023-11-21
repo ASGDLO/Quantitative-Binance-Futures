@@ -447,55 +447,56 @@ class FreqtradeBot(LoggingMixin):
 
     def handle_onexchange_order(self, trade: Trade):
         """
-        Try refinding a order that is not in the database.
-        Only used balance disappeared, which would make exiting impossible.
+        This function locates and handles orders on the exchange that are missing in the local database.
+        It is particularly used in scenarios where there's a discrepancy in the account balance,
+        making it difficult to manage open trades accurately. The function fetches orders from the exchange,
+        updates local records, and ensures that the trade's state is synchronized with the actual exchange data.
         """
         try:
+            # Fetch recent orders from the exchange
             orders = self.exchange.fetch_orders(
                 trade.pair, trade.open_date_utc - timedelta(seconds=10))
             prev_exit_reason = trade.exit_reason
             prev_trade_state = trade.is_open
-            for order in orders:
-                trade_order = [o for o in trade.orders if o.order_id == order['id']]
 
+            for order in orders:
+                # Check if the order is already known
+                trade_order = [o for o in trade.orders if o.order_id == order['id']]
                 if trade_order:
-                    # We knew this order, but didn't have it updated properly
                     order_obj = trade_order[0]
                 else:
-                    logger.info(f"Found previously unknown order {order['id']} for {trade.pair}.")
-
+                    # Handle newly discovered order
+                    logger.info(f"Found new unknown order {order['id']} for {trade.pair}.")
                     order_obj = Order.parse_from_ccxt_object(order, trade.pair, order['side'])
                     order_obj.order_filled_date = datetime.fromtimestamp(
                         safe_value_fallback(order, 'lastTradeTimestamp', 'timestamp') // 1000,
                         tz=timezone.utc)
                     trade.orders.append(order_obj)
-                    Trade.commit()
                     trade.exit_reason = ExitType.SOLD_ON_EXCHANGE.value
+                    Trade.commit()
 
+                # Update trade state
                 self.update_trade_state(trade, order['id'], order, send_msg=False)
+                logger.info(f"Handled order {order['id']}")
 
-                logger.info(f"handled order {order['id']}")
-
-            # Refresh trade from database
+            # Refresh trade state and handle closure if applicable
             Trade.session.refresh(trade)
             if not trade.is_open:
-                # Trade was just closed
                 trade.close_date = trade.date_last_filled_utc
-                self.order_close_notify(trade, order_obj,
-                                        order_obj.ft_order_side == 'stoploss',
+                self.order_close_notify(trade, order_obj, order_obj.ft_order_side == 'stoploss',
                                         send_msg=prev_trade_state != trade.is_open)
             else:
                 trade.exit_reason = prev_exit_reason
             Trade.commit()
 
         except ExchangeError:
-            logger.warning("Error finding onexchange order.")
-        except Exception:
-            # catching https://github.com/freqtrade/freqtrade/issues/9025
-            logger.warning("Error finding onexchange order", exc_info=True)
-#
-# BUY / enter positions / open trades logic and methods
-#
+            logger.warning("Error occurred while finding on-exchange order.")
+        except Exception as e:
+            logger.warning(f"Unexpected error in finding on-exchange order: {e}", exc_info=True)
+
+    # Additional logic for BUY / enter positions / open trades methods follow here...
+
+    #
 
     def enter_positions(self) -> int:
         """
