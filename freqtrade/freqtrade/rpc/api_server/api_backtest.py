@@ -152,46 +152,47 @@ async def api_start_backtest(
 @router.get('/backtest', response_model=BacktestResponse, tags=['webserver', 'backtest'])
 def api_get_backtest():
     """
-    Get backtesting result.
-    Returns Result after backtesting has been ran.
+    Retrieves the result of a backtesting operation.
+    Returns a JSON object with the status and details of the backtest.
     """
     from freqtrade.persistence import LocalTrade
+
+    def construct_response(status, running, step="", progress=0, status_msg="", trade_count=None, backtest_result=None):
+        """
+        Constructs a response dictionary for the backtest API endpoint.
+        """
+        response = {
+            "status": status,
+            "running": running,
+            "step": step,
+            "progress": progress,
+            "status_msg": status_msg
+        }
+        if trade_count is not None:
+            response["trade_count"] = trade_count
+        if backtest_result is not None:
+            response["backtest_result"] = backtest_result
+
+        return response
+
+    # Check if backtest task is running
     if ApiBG.bgtask_running:
-        return {
-            "status": "running",
-            "running": True,
-            "step": (ApiBG.bt['bt'].progress.action if ApiBG.bt['bt']
-                     else str(BacktestState.STARTUP)),
-            "progress": ApiBG.bt['bt'].progress.progress if ApiBG.bt['bt'] else 0,
-            "trade_count": len(LocalTrade.trades),
-            "status_msg": "Backtest running",
-        }
+        progress = ApiBG.bt['bt'].progress.progress if ApiBG.bt['bt'] else 0
+        step = ApiBG.bt['bt'].progress.action if ApiBG.bt['bt'] else str(BacktestState.STARTUP)
+        return construct_response("running", True, step, progress, "Backtest running", len(LocalTrade.trades))
 
+    # Check if backtest task has not started
     if not ApiBG.bt['bt']:
-        return {
-            "status": "not_started",
-            "running": False,
-            "step": "",
-            "progress": 0,
-            "status_msg": "Backtest not yet executed"
-        }
-    if ApiBG.bt['bt_error']:
-        return {
-            "status": "error",
-            "running": False,
-            "step": "",
-            "progress": 0,
-            "status_msg": f"Backtest failed with {ApiBG.bt['bt_error']}"
-        }
+        return construct_response("not_started", False, status_msg="Backtest not yet executed")
 
-    return {
-        "status": "ended",
-        "running": False,
-        "status_msg": "Backtest ended",
-        "step": "finished",
-        "progress": 1,
-        "backtest_result": ApiBG.bt['bt'].results,
-    }
+    # Check if there was an error in backtest
+    if ApiBG.bt['bt_error']:
+        error_msg = f"Backtest failed with {ApiBG.bt['bt_error']}"
+        return construct_response("error", False, status_msg=error_msg)
+
+    # If backtest has ended
+    return construct_response("ended", False, "finished", 1, "Backtest ended", backtest_result=ApiBG.bt['bt'].results)
+
 
 
 @router.delete('/backtest', response_model=BacktestResponse, tags=['webserver', 'backtest'])
