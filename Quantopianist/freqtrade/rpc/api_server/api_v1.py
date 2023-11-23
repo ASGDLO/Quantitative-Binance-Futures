@@ -278,34 +278,51 @@ def get_strategy(strategy: str, config=Depends(get_config)):
     }
 
 
+
+
+# Business Logic Layer
+def get_filtered_pairs(data_handler, timeframe: Optional[str], stake_currency: Optional[str], 
+                       candletype: Optional[CandleType], trading_mode: TradingMode) -> List[Tuple[str, str, CandleType]]:
+    try:
+        pair_interval = data_handler.ohlcv_get_available_data(trading_mode)
+        
+        if timeframe:
+            pair_interval = [pair for pair in pair_interval if pair[1] == timeframe]
+        if stake_currency:
+            pair_interval = [pair for pair in pair_interval if pair[0].endswith(stake_currency)]
+        if candletype:
+            pair_interval = [pair for pair in pair_interval if pair[2] == candletype]
+        else:
+            default_candle_type = CandleType.get_default(trading_mode)
+            pair_interval = [pair for pair in pair_interval if pair[2] == default_candle_type]
+
+        return sorted(pair_interval, key=lambda x: x[0])
+
+    except Exception as e:
+        raise e  # Or handle more gracefully
+
+# API Layer
 @router.get('/available_pairs', response_model=AvailablePairs, tags=['candle data'])
 def list_available_pairs(timeframe: Optional[str] = None, stake_currency: Optional[str] = None,
                          candletype: Optional[CandleType] = None, config=Depends(get_config)):
+    
+    try:
+        dh = get_datahandler(config['datadir'], config.get('dataformat_ohlcv'))
+        trading_mode = config.get('trading_mode', TradingMode.SPOT)
 
-    dh = get_datahandler(config['datadir'], config.get('dataformat_ohlcv'))
-    trading_mode: TradingMode = config.get('trading_mode', TradingMode.SPOT)
-    pair_interval = dh.ohlcv_get_available_data(config['datadir'], trading_mode)
+        pair_interval = get_filtered_pairs(dh, timeframe, stake_currency, candletype, trading_mode)
 
-    if timeframe:
-        pair_interval = [pair for pair in pair_interval if pair[1] == timeframe]
-    if stake_currency:
-        pair_interval = [pair for pair in pair_interval if pair[0].endswith(stake_currency)]
-    if candletype:
-        pair_interval = [pair for pair in pair_interval if pair[2] == candletype]
-    else:
-        candle_type = CandleType.get_default(trading_mode)
-        pair_interval = [pair for pair in pair_interval if pair[2] == candle_type]
+        pairs = list({x[0] for x in pair_interval})
+        pairs.sort()
+        result = {
+            'length': len(pairs),
+            'pairs': pairs,
+            'pair_interval': pair_interval,
+        }
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-    pair_interval = sorted(pair_interval, key=lambda x: x[0])
-
-    pairs = list({x[0] for x in pair_interval})
-    pairs.sort()
-    result = {
-        'length': len(pairs),
-        'pairs': pairs,
-        'pair_interval': pair_interval,
-    }
-    return result
 
 
 @router.get('/sysinfo', response_model=SysInfo, tags=['info'])
