@@ -60,6 +60,10 @@ class UvicornServer(uvicorn.Server):
         while not self.started:
             time.sleep(1e-3)
 
+    """Is a context manager for running the server in a separate thread. 
+        Starts a new thread that calls the run method. 
+        Waits in a loop until self.started is True (i.e., the server has started)."""
+
     def cleanup(self):
         self.should_exit = True
         self.thread.join()
