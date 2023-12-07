@@ -41,25 +41,21 @@ def is_relative_to(path, base) -> bool:
 
 
 @router_ui.get('/{rest_of_path:path}', include_in_schema=False)
-async def index_html(rest_of_path: str):
+async def index_html(rest_of_path: str, path_service: PathService = Depends(PathService)):
     """
-    Emulate path fallback to index.html.
+    Serve files for UI, with path fallback to index.html.
     """
-    if rest_of_path.startswith('api') or rest_of_path.startswith('.'):
-        raise HTTPException(status_code=404, detail="Not Found")
-    uibase = Path(__file__).parent / 'ui/installed/'
-    filename = uibase / rest_of_path
-    # It's security relevant to check "relative_to".
-    # Without this, Directory-traversal is possible.
-    media_type: Optional[str] = None
-    if filename.suffix == '.js':
-        # Force text/javascript for .js files - Circumvent faulty system configuration
-        media_type = 'application/javascript'
-    if filename.is_file() and is_relative_to(filename, uibase):
-        return FileResponse(str(filename), media_type=media_type)
+    if path_service.is_api_or_hidden_path(rest_of_path):
+        raise PathNotFoundException()
 
-    index_file = uibase / 'index.html'
-    if not index_file.is_file():
-        return FileResponse(str(uibase.parent / 'fallback_file.html'))
-    # Fall back to index.html, as indicated by vue router docs
-    return FileResponse(str(index_file))
+    try:
+        filename, media_type = path_service.get_file_and_media_type(rest_of_path)
+
+        if path_service.is_valid_file(filename):
+            return FileResponse(str(filename), media_type=media_type)
+
+        return path_service.get_index_or_fallback_response()
+    except Exception as e:
+        logger.error(f"Error serving file: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
