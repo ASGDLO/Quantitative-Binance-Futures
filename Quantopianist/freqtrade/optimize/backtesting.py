@@ -627,28 +627,40 @@ class Backtesting:
         return trade
 
     def handle_left_open(self, open_trades: Dict[str, List[LocalTrade]],
-                         data: Dict[str, List[Tuple]]) -> List[LocalTrade]:
+                        data: Dict[str, List[Tuple]]) -> List[LocalTrade]:
         """
-        Handling of left open trades at the end of backtesting
-        """
-        trades = []
-        for pair in open_trades.keys():
-            if len(open_trades[pair]) > 0:
-                for trade in open_trades[pair]:
-                    if trade.open_order_id and trade.nr_of_successful_buys == 0:
-                        # Ignore trade if buy-order did not fill yet
-                        continue
-                    sell_row = data[pair][-1]
+        Handle left open trades at the end of backtesting.
 
-                    trade.close_date = sell_row[DATE_IDX].to_pydatetime()
-                    trade.sell_reason = SellType.FORCE_SELL.value
-                    trade.close(sell_row[OPEN_IDX], show_msg=False)
-                    LocalTrade.close_bt_trade(trade)
-                    # Deepcopy object to have wallets update correctly
-                    trade1 = deepcopy(trade)
-                    trade1.is_open = True
-                    trades.append(trade1)
+        Args:
+            open_trades (Dict[str, List[LocalTrade]]): Dictionary of open trades.
+            data (Dict[str, List[Tuple]]): Data for the trades.
+
+        Returns:
+            List[LocalTrade]: List of updated trades.
+        """
+
+        trades = []
+        for pair, trades_list in open_trades.items():
+            if not trades_list:
+                continue
+
+            for trade in trades_list:
+                if not trade.open_order_id or trade.nr_of_successful_buys == 0:
+                    continue
+
+                sell_row = data[pair][-1]
+                trade.close_date = sell_row[DATE_IDX].to_pydatetime()
+                trade.sell_reason = SellType.FORCE_SELL.value
+                trade.close(sell_row[OPEN_IDX], show_msg=False)
+                LocalTrade.close_bt_trade(trade)
+
+                # Deepcopy object to have wallets update correctly
+                trade_copy = deepcopy(trade)
+                trade_copy.is_open = True
+                trades.append(trade_copy)
+
         return trades
+
 
     def trade_slot_available(self, max_open_trades: int, open_trade_count: int) -> bool:
         # Always allow trades when max_open_trades is enabled.
