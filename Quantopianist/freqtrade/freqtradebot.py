@@ -1189,18 +1189,19 @@ class FreqtradeBot(LoggingMixin):
 
     def manage_open_orders(self) -> None:
         """
-        Management of open orders on exchange. Unfilled orders might be cancelled if timeout
-        was met or replaced if there's a new candle and user has requested it.
-        Timeout setting takes priority over limit order adjustment request.
+        Handles the management of open orders on the exchange. This function will check each open order and decide whether to cancel or replace it based on certain conditions. If an order has exceeded the timeout threshold, it will be cancelled. If there is a new candle and the user has enabled order adjustment, the order might be replaced. The timeout setting has precedence over the limit order adjustment request.
+
         :return: None
         """
+
         for trade in Trade.get_open_order_trades():
+            if not trade.open_order_id:
+                continue
+
             try:
-                if not trade.open_order_id:
-                    continue
                 order = self.exchange.fetch_order(trade.open_order_id, trade.pair)
-            except (ExchangeError):
-                logger.info('Cannot query order for %s due to %s', trade, traceback.format_exc())
+            except ExchangeError:
+                logger.info(f'Cannot query order for {trade} due to {traceback.format_exc()}')
                 continue
 
             fully_cancelled = self.update_trade_state(trade, trade.open_order_id, order)
@@ -1209,10 +1210,11 @@ class FreqtradeBot(LoggingMixin):
 
             if not_closed:
                 if fully_cancelled or (order_obj and self.strategy.ft_check_timed_out(
-                   trade, order_obj, datetime.now(timezone.utc))):
+                trade, order_obj, datetime.now(timezone.utc))):
                     self.handle_timedout_order(order, trade)
                 else:
                     self.replace_order(order, order_obj, trade)
+
 
     def handle_timedout_order(self, order: Dict, trade: Trade) -> None:
         """
