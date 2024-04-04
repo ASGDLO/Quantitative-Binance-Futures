@@ -6,7 +6,6 @@ from typing import Any, Dict
 
 from freqtrade.exceptions import OperationalException
 
-
 class FTBufferingHandler(BufferingHandler):
     def flush(self):
         """
